@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The winning underdog!</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/d3.v3.js"></script>
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/miso.ds.deps.min.0.4.0.js"></script>
+<script src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/dropit.js"></script>
+<link rel="stylesheet" href="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Styles/dropit.css" type="text/css" />
+<style type="text/css">
+div#dayslider{
+    float: left;
+    clear: left;
+    width: 500px;
+    /* margin: 7px 20px 7px 10px; */
+}
+#dayslider .ui-slider-range { background: #ef2929; }
+.grid .tick {
+    stroke: grey;
+    opacity: 0.6;
+}
+.grid path {
+      stroke-width: 0.2;
+}
+html, body
+{
+  height: 100%;
+  width: 100%;
+}
+.ui-menu { width: 200px; }
+path {
+    fill: none;
+}
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 250px;                  
+  height: 125px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+.menu ul { display: none; } /* Hide before plugin loads */
+.menu ul.dropit-submenu {
+    background-color: #fff;
+    border: 1px solid #b2b2b2;
+    padding: 6px 0;
+    margin: 3px 0 0 1px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+       -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}          
+.menu ul.dropit-submenu a {
+    display: block;
+    font-size: 14px;
+    line-height: 25px;
+    color: #7a868e;
+    padding: 0 18px;
+}
+.menu ul.dropit-submenu a:hover {
+    background: #248fc1;
+    color: #fff;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0">
+	<tr height="80px">
+		<td colspan="2">
+			<div id="textsvg" style="float:left;"></div>
+		</td>
+	</tr>
+	<tr height="80px">
+		<td colspan="2">
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<input id="button1-" onclick="button1Minus()" type="submit" value="Matchday -" /> 
+				<input id="button1-" onclick="button1Plus()" type="submit" value="Matchday +" /> 
+				<input id="playpause" onclick="play()" type="submit" value="Play" />
+			</div>
+			<div style="float: left; margin: 0px 0px">
+				<div id="dayslider" style= "margin: 5px 20px"></div>
+				<!-- <input id="button2-" onclick="button2Minus()" type="submit" value="Right Matchday -" /> 
+				<input id="button2+" onclick="button2Plus()" type="submit" value="Right Matchday +" /> -->
+			</div>
+			<!-- <form>
+			  <div id="radio" style="float: left; margin: 0px 20px">
+			    <input type="radio" id="season11-12" onclick="changeSeason(0)" name="radio" checked="checked"/><label for="season11-12">2011-12</label>
+			    <input type="radio" id="season12-13" onclick="changeSeason(1)" name="radio" /><label for="season12-13">2012-13</label>
+			  </div>
+			</form>  -->
+			<!-- <div style="float: left; margin: 0px 0px 0px 50px">			
+				  <label for="spinner">Compare with matchday:</label>
+				  <input id="spinner" name="value">
+			</div> -->
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<ul id="menu1" class="menu">
+		            <li><a id="leaguebutton" href="#" class="btn">Premier League</a>
+		            <ul>
+		                <li><a onclick="changeLeague('Premier League')" href="#">Premier League</a></li>
+		                <li><a onclick="changeLeague('Jupiler Pro League')" href="#">Jupiler Pro League</a></li>
+		            </ul></li>
+		        </ul>
+			</div>
+			<div style="float: left; margin: 0px 0px 0px 0px">
+		        <ul id="menu2" class="menu">
+		            <li><a id="seasonbutton" href="#" class="btn">2011-2012</a>
+		            <ul id="seasonmenu">
+		                <!-- <li><a href="#">Some Action 1</a></li>
+		                <li><a href="#">Some Action 2</a></li>
+		                <li><a href="#">Some Action 3</a></li>
+		                <li><a href="#">Some Action 4</a></li> -->
+		            </ul></li>
+		        </ul>
+	        </div>
+	        
+		</td>
+	</tr>
+	<!-- <tr height="50%">
+		<td colspan="2">		
+			<div id="content1" style="float:left;"></div>
+		</td>
+	</tr> -->
+	<tr height="100%">
+		<!-- <td style="width:120px;">
+			<table border="0">
+				<tr height="80px">
+					<div></div>
+				</tr>
+				<tr>
+					<div id="menubar" style="float:left;">
+						<ul id="menu"></ul>
+					</div>
+				</tr>
+				<tr height="80px">
+					<div></div>
+				</tr>
+			</table>
+		</td> -->
+		<td>		
+			<div id="content1" width="100%" style="float:left;"></div>
+		</td>
+		<td>		
+			<div id="content2" width="100%" style="float:left;"></div>
+		</td>
+	</tr>
+</table>
+<!-- <div style="float: left; margin: 5px 100px">
+	<div id="dayslider"></div>
+	<input id="button-" onclick="buttonMinus()" type="submit" value="Matchday -" /> 
+	<input id="button+" onclick="buttonPlus()" type="submit" value="Matchday +" />
+	<input id="playpause" onclick="play()" type="submit" value="Play" />
+</div>
+<form>
+  <div id="radio">
+    <input type="radio" id="win" onclick="changeData(7)" name="radio" checked="checked"/><label for="win">Win</label>
+    <input type="radio" id="draw" onclick="changeData(9)" name="radio" /><label for="draw">Draw</label>
+    <input type="radio" id="lose" onclick="changeData(11)" name="radio" /><label for="lose">Lose</label>
+  </div>
+</form> 
+<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+<b>Menu</b><br>
+HTML<br>
+CSS<br>
+JavaScript</div>
+<div id="content" style="float:left;"></div> -->
+<script type="text/javascript" src="Script/vis5.js"></script>
+</body>

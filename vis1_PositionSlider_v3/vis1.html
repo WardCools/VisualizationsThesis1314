@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The Premier League Visualized</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="Script/d3.v3.js"></script>
+<script type="text/javascript" src="Script/miso.ds.deps.min.0.4.0.js"></script>
+<style type="text/css">
+
+div#dayslider{
+    float: left;
+    clear: left;
+    width: 500px;
+    margin: 7px 20px 7px 10px;
+}
+#dayslider .ui-slider-range { background: #ef2929; }
+
+#1112 #1213{
+    margin: 7px 20px 7px 10px;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 250px;                  
+  height: 125px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0">
+	<tr height="80px">
+		<td colspan="2">
+			<div id="textsvg" style="float:left;"></div>
+		</td>
+	</tr>
+	<tr height="80px">
+		<td colspan="2">
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<input id="button1-" onclick="button1Minus()" type="submit" value="Left Matchday -" /> 
+				<input id="button1-" onclick="button1Plus()" type="submit" value="Left Matchday +" /> 
+			</div>
+			<div style="float: left; margin: 0px 0px">
+				<div id="dayslider" style= "margin: 5px 20px"></div>
+				<input id="button2-" onclick="button2Minus()" type="submit" value="Right Matchday -" /> 
+				<input id="button2+" onclick="button2Plus()" type="submit" value="Right Matchday +" />
+				<input id="playpause" onclick="play()" type="submit" value="Play" />
+			</div>
+			<form>
+			  <div id="radio" style="float: left; margin: 0px 20px">
+			    <input type="radio" id="pl1112" name="radio" onclick="changeSeason(1112)"/><label for="pl1112">PL 2011-12</label>
+			    <input type="radio" id="pl1213" name="radio" onclick="changeSeason(1213)" checked="checked" /><label for="pl1213">PL 2012-13</label>
+			  </div>
+			</form> 
+		</td>
+	</tr>
+	<tr height="100%">
+		<td colspan="2">		
+			<div id="content" style="float:left;"></div>
+		</td>
+	</tr>
+</table>
+<!-- <div style="float: left; margin: 5px 100px">
+	<div id="dayslider"></div>
+	<input id="button-" onclick="buttonMinus()" type="submit" value="Matchday -" /> 
+	<input id="button+" onclick="buttonPlus()" type="submit" value="Matchday +" />
+	<input id="playpause" onclick="play()" type="submit" value="Play" />
+</div> -->
+<!-- <form>
+  <div id="radio">
+    <input type="radio" id="pl1112" name="radio" onclick="changeSeason(1112)"/><label for="pl1112">PL 2011-12</label>
+    <input type="radio" id="pl1213" name="radio" onclick="changeSeason(1213)" checked="checked" /><label for="pl1213">PL 2012-13</label>
+    <input type="radio" id="jpl1213" name="radio" /><label for="jpl1213">JPL 2012-13</label>
+  </div>
+</form> -->
+<!-- <div id="radio>">
+	<input id = "1112" name="radio" onclick="changeSeason(1112)" checked="checked" type="radio"><label for="1112">Season 2011-12</label>
+	<input id = "1213" name="radio" onclick="changeSeason(1213)" type="radio"><label for="1112">Season 2012-13</label>
+</div> -->
+<!-- <div id="content" style="float:left;"></div> -->
+<script type="text/javascript" src="Script/vis1.js"></script>
+</body>

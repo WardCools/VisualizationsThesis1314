@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The winning underdog!</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="Script/d3.v3.js"></script>
+<script type="text/javascript" src="Script/miso.ds.deps.min.0.4.0.js"></script>
+<style type="text/css">
+div#dayslider{
+    float: left;
+    clear: left;
+    width: 500px;
+    /* margin: 7px 20px 7px 10px; */
+}
+#dayslider .ui-slider-range { background: #ef2929; }
+.grid .tick {
+    stroke: grey;
+    opacity: 0.6;
+}
+.grid path {
+      stroke-width: 0.2;
+}
+html, body
+{
+  height: 100%;
+  width: 100%;
+}
+.ui-menu { width: 200px; }
+path {
+    fill: none;
+}
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 250px;                  
+  height: 125px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0">
+	<tr height="80px">
+		<td colspan="2">
+			<div id="textsvg" style="float:left;"></div>
+		</td>
+	</tr>
+	<tr height="80px">
+		<td colspan="2">
+			<div style="float: left; margin: 0px 100px">
+				<div id="dayslider" style= "margin: 5px 20px"></div>
+				<input id="button-" style= "margin: 0px 0px" onclick="buttonMinus()" type="submit" value="Matchday -" /> 
+				<input id="button+" onclick="buttonPlus()" type="submit" value="Matchday +" />
+				<input id="playpause" onclick="play()" type="submit" value="Play" />
+			</div>
+			<!-- <form>
+			  <div id="radio1" style="float: left; margin: 0px 10px">
+			    <input type="radio" id="win" onclick="changeData(7)" name="radio" checked="checked"/><label for="win">Win</label>
+			    <input type="radio" id="draw" onclick="changeData(9)" name="radio" /><label for="draw">Draw</label>
+			    <input type="radio" id="lose" onclick="changeData(11)" name="radio" /><label for="lose">Lose</label>
+			  </div>
+			</form>  -->
+			<form>
+			  <div id="radio2" style="float: left; margin: 0px 50px">
+			    <input type="radio" id="season11-12" onclick="changeSeason(0)" name="radio" checked="checked"/><label for="season11-12">2011-12</label>
+			    <input type="radio" id="season12-13" onclick="changeSeason(1)" name="radio" /><label for="season12-13">2012-13</label>
+			  </div>
+			</form> 
+		</td>
+	</tr>
+	<tr height="100%">
+		<td style="width:120px;">			
+			<table border="0">
+				<tr height="80px">
+					<div></div>
+				</tr>
+				<tr>
+					<div id="menubar" style="float:left;">
+						<ul id="menu"></ul>
+					</div>
+				</tr>
+				<tr height="80px">
+					<div></div>
+				</tr>
+			</table>
+			<div id="menubar" style="float:left;">
+				<ul id="menu"></ul>
+			</div>
+		</td>
+		<td>		
+			<div id="content" style="float:left;"></div>
+		</td>
+	</tr>
+</table>
+<!-- <div style="float: left; margin: 5px 100px">
+	<div id="dayslider"></div>
+	<input id="button-" onclick="buttonMinus()" type="submit" value="Matchday -" /> 
+	<input id="button+" onclick="buttonPlus()" type="submit" value="Matchday +" />
+	<input id="playpause" onclick="play()" type="submit" value="Play" />
+</div>
+<form>
+  <div id="radio">
+    <input type="radio" id="win" onclick="changeData(7)" name="radio" checked="checked"/><label for="win">Win</label>
+    <input type="radio" id="draw" onclick="changeData(9)" name="radio" /><label for="draw">Draw</label>
+    <input type="radio" id="lose" onclick="changeData(11)" name="radio" /><label for="lose">Lose</label>
+  </div>
+</form> 
+<div id="menu" style="background-color:#FFD700;height:200px;width:100px;float:left;">
+<b>Menu</b><br>
+HTML<br>
+CSS<br>
+JavaScript</div>
+<div id="content" style="float:left;"></div> -->
+<script type="text/javascript" src="Script/vis2.js"></script>
+</body>

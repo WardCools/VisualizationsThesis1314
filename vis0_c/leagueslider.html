@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The Premier League Visualized</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="script/dw_slider.js" type="text/javascript"></script>
+<script type="text/javascript" src="script/d3.v3.js"></script>
+<script type="text/javascript" src="script/miso.ds.deps.min.0.4.0.js"></script>
+<script src="script/simple-slider.js"></script>
+<style type="text/css">
+circle {
+  fill: #000;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+div#track  {
+    width: 180px;
+    height: 16px;
+    background-color: #336;
+    border: 1px solid #336;
+    position: relative;
+}
+
+div#slider {
+    background-color: #ddd;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+}
+
+div#display {
+    width: 40px; height: 20px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 4px;
+    margin: 1em 0 2em;
+}
+</style>
+<link href="style/simple-slider.css" rel="stylesheet" type="text/css" />
+<link href="style/simple-slider-volume.css" rel="stylesheet" type="text/css" /> 
+</head>
+<body>
+<input id = "button-" onclick="buttonMinus()" type="submit" value="Speeldag -"/>
+<input id = "button+" onclick="buttonPlus()" type="submit" value="Speeldag +"/>
+<div id="track">
+    <div id="slider"></div>
+</div>
+<div id="display">&nbsp;</div>
+<div id="dayslider" data-slider-highlight="true" data-slider-range="0,38" data-slider-step="1" data-slider-snap="true"></div>
+<div id="content" style="float:left;"></div>
+<script type="text/javascript" src="script/sliderscript.js"></script>
+</body>

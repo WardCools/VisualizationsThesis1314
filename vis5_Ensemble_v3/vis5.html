@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The winning underdog!</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/d3.v3.js"></script>
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/miso.ds.deps.min.0.4.0.js"></script>
+<script src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/dropit.js"></script>
+<link rel="stylesheet" href="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Styles/dropit.css" type="text/css" />
+<style type="text/css">
+div#dayslider{
+    float: left;
+    clear: left;
+    width: 500px;
+    /* margin: 7px 20px 7px 10px; */
+}
+#dayslider .ui-slider-range { background: #ef2929; }
+.grid .tick {
+    stroke: grey;
+    opacity: 0.6;
+}
+.grid path {
+      stroke-width: 0.2;
+}
+#playpause {
+	width: 120px;
+}
+html, body
+{
+  height: 100%;
+  width: 100%;
+}
+.ui-menu { width: 200px; }
+path {
+    fill: none;
+}
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 250px;                  
+  height: 125px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+.menu ul { display: none; } /* Hide before plugin loads */
+.menu ul.dropit-submenu {
+    background-color: #fff;
+    border: 1px solid #b2b2b2;
+    padding: 6px 0;
+    margin: 3px 0 0 1px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+       -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}          
+.menu ul.dropit-submenu a {
+    display: block;
+    font-size: 14px;
+    line-height: 25px;
+    color: #7a868e;
+    padding: 0 18px;
+}
+.menu ul.dropit-submenu a:hover {
+    background: #248fc1;
+    color: #fff;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0">
+	<tr height="80px">
+		<td colspan="2">
+			<div id="textsvg" style="float:left;"></div>
+		</td>
+	</tr>
+	<tr height="80px">
+		<td colspan="2">
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<input id="button1-" onclick="button1Minus()" type="submit" value="Left Matchday -" /> 
+				<input id="button1+" onclick="button1Plus()" type="submit" value="Left Matchday +" /> 
+				<input id="playpause" onclick="play()" type="submit" value="Play" />
+			</div>
+			<div style="float: left; margin: 0px 0px">
+				<div id="dayslider" style= "margin: 5px 20px"></div>
+			</div>
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<input id="button2-" onclick="button2Minus()" type="submit" value="Right Matchday -" /> 
+				<input id="button2+" onclick="button2Plus()" type="submit" value="Right Matchday +" /> 
+			</div>
+			<div style="float: left; margin: 0px 0px 0px 50px">
+				<ul id="menu1" class="menu">
+		            <li><a id="leaguebutton" href="#" class="btn">Premier League</a>
+		            <ul>
+		                <li><a onclick="changeLeague('Premier League')" href="#">Premier League</a></li>
+		                <li><a onclick="changeLeague('Jupiler Pro League')" href="#">Jupiler Pro League</a></li>
+		            </ul></li>
+		        </ul>
+			</div>
+			<div style="float: left; margin: 0px 0px 0px 0px">
+		        <ul id="menu2" class="menu">
+		            <li><a id="seasonbutton" href="#" class="btn"></a>
+		            <ul id="seasonmenu">
+		            </ul></li>
+		        </ul>
+	        </div>
+	        
+		</td>
+	</tr>
+	<tr height="100%">
+		<td>		
+			<div id="content1" width="100%" style="float:left;"></div>
+		</td>
+		<td>		
+			<div id="content2" width="100%" style="float:left;"></div>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript" src="Script/vis5.js"></script>
+</body>
