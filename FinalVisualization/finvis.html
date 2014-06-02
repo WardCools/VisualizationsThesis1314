@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>The European Union</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/d3.v3.js"></script>
+<!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+<script type="text/javascript" src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/miso.ds.deps.min.0.4.0.js"></script>
+<script src="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Scripts/dropit.js"></script>
+<link rel="stylesheet" href="http://www.student.kuleuven.be/~s0187958/Thesis/Data/Styles/dropit.css" type="text/css" />
+<style type="text/css">
+div#yearslider{
+    float: left;
+    clear: left;
+    width: 500px;
+    /* margin: 7px 20px 7px 10px; */
+}
+#yearslider .ui-slider-range { background: #ef2929; }
+.grid .tick {
+    stroke: grey;
+    opacity: 0.6;
+}
+.grid path {
+      stroke-width: 0.2;
+}
+html, body
+{
+  height: 100%;
+  width: 100%;
+}
+.ui-menu { width: 200px; }
+path {
+    fill: none;
+}
+#currentyearspinner {
+	width: 45px;	
+}
+#shownyearsspinner {
+	width: 30px;	
+}
+#compspinner {
+	width: 45px;	
+}
+#playpause {
+	width: 100px;
+}
+/* #parameterbutton {
+	width: 300px;
+}
+#parameter2button {
+	width: 100px;
+}
+#parameter3button {
+	width: 100px;
+} */
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 250px;                  
+  height: 125px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+.menu ul { display: none; } /* Hide before plugin loads */
+.menu ul.dropit-submenu {
+    background-color: #fff;
+    border: 1px solid #b2b2b2;
+    padding: 6px 0;
+    margin: 3px 0 0 1px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+       -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}          
+.menu ul.dropit-submenu a {
+    display: block;
+    font-size: 14px;
+    line-height: 25px;
+    color: #7a868e;
+    padding: 0 18px;
+}
+.menu ul.dropit-submenu a:hover {
+    background: #248fc1;
+    color: #fff;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0">
+	<tr height="40px">
+		<td colspan="2">
+			<div id="textsvg" style="float:left;"></div>
+		</td>
+	</tr>
+	<tr height="40px">
+		<td colspan="2">
+			<div style="float: left; margin: 0px 0px 0px 50px">			
+				  <label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 20px; font-weight: bold" for="shownyearsspinner">#years shown:</label>
+				  <input id="shownyearsspinner" name="value">
+			</div>
+			<div style="float: left; margin: -5px 0px 0px 10px">
+				<input id="playpause" onclick="play()" type="submit" value="Play" />
+			</div>
+			<div style="float: left; margin: -5px 0px 0px 10px">			
+				  <label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 25px; font-weight: bold" for="currentyearspinner">Current Year:</label>
+				  <input id="currentyearspinner" name="value">
+			</div>
+			<div style="float: left; margin: 0px 0px">
+				<div id="yearslider" style= "margin: 5px 20px"></div>
+			</div>
+			<div style="float: right; margin: -5px 300px 0px 10px">	
+				<input id="resetcomp" onclick="resetCompare()" type="submit" value="Reset compare" />	
+			</div>	        
+			<div style="float: right; margin: 0px 0px 0px 10px">			
+				  <label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 20px; font-weight: bold" for="compspinner">Compare with:</label>
+				  <input id="compspinner" name="value">
+			</div>
+		</td>
+	</tr>
+	<tr height="40px">
+		<td colspan="2">
+			<div style="float: right; margin: 0px 300px 0px 50px">
+				<label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 20px; font-weight: bold" for="menu3">Third parameter:</label>
+				<ul id="menu3" class="menu">
+		            <li><a id="parameter3button" href="#" class="btn">Unemployment Rate</a>
+		            <ul>
+		                <li><a onclick="changeThirdParameter(1)" href="#">Gross Domestic Product</a></li>		            	
+		                <li><a onclick="changeThirdParameter(2)" href="#">Life Expectancy</a></li>
+		                <li><a onclick="changeThirdParameter(3)" href="#">Unemployment Rate</a></li>
+		                <li><a onclick="changeThirdParameter(4)" href="#">Exit Age From Labour</a></li>
+		                <li><a onclick="changeThirdParameter(5)" href="#">Government Efficiency</a></li>
+		                <li><a onclick="changeThirdParameter(6)" href="#">Consumer Price Index</a></li>
+		            </ul></li>
+		        </ul>
+			</div>
+			<div style="float: right; margin: 0px 0px 0px 50px">
+				<label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 20px; font-weight: bold" for="menu2">Second parameter:</label>
+				<ul id="menu2" class="menu">
+		            <li><a id="parameter2button" href="#" class="btn">Life Expectancy</a>
+		            <ul>
+		                <li><a onclick="changeSecondParameter(1)" href="#">Gross Domestic Product</a></li>		            	
+		                <li><a onclick="changeSecondParameter(2)" href="#">Life Expectancy</a></li>
+		                <li><a onclick="changeSecondParameter(3)" href="#">Unemployment Rate</a></li>
+		                <li><a onclick="changeSecondParameter(4)" href="#">Exit Age From Labour</a></li>
+		                <li><a onclick="changeSecondParameter(5)" href="#">Government Efficiency</a></li>
+		                <li><a onclick="changeSecondParameter(6)" href="#">Consumer Price Index</a></li>
+		            </ul></li>
+		        </ul>
+			</div>
+			<div style="float: right; margin: 0px 0px 0px 50px">
+				<label style="color: #CC0000; opacity: 0.75; font-family: san-serif; font-size: 20px; font-weight: bold" for="menu">Main parameter:</label>
+				<ul id="menu1" class="menu">
+		            <li><a id="parameterbutton" href="#" class="btn">Gross Domestic Product</a>
+		            <ul>
+		                <li><a onclick="changeMainParameter(1)" href="#">Gross Domestic Product</a></li>		            	
+		                <li><a onclick="changeMainParameter(2)" href="#">Life Expectancy</a></li>
+		                <li><a onclick="changeMainParameter(3)" href="#">Unemployment Rate</a></li>
+		                <li><a onclick="changeMainParameter(4)" href="#">Exit Age From Labour</a></li>
+		                <li><a onclick="changeMainParameter(5)" href="#">Government Efficiency</a></li>
+		                <li><a onclick="changeMainParameter(6)" href="#">Consumer Price Index</a></li>
+		            </ul></li>
+		        </ul>
+			</div>
+		</td>
+	</tr>
+	<tr height="100%">
+		<td>		
+			<div id="content" width="100%" style="float:left;"></div>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript" src="Script/finvis.js"></script>
+</body>
